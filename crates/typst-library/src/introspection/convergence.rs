@@ -153,6 +153,14 @@ impl Introspection {
     {
         Self(Arc::new(inner))
     }
+
+    /// Try to downcast an erased introspection back to a strong type.
+    pub fn downcast<I>(&self) -> Option<&I>
+    where
+        I: Introspect,
+    {
+        self.0.as_any().downcast_ref()
+    }
 }
 
 impl PartialEq for Introspection {
@@ -169,6 +177,7 @@ trait Bounds: Debug + Send + Sync + Any + 'static {
     ) -> Option<SourceDiagnostic>;
     fn dyn_eq(&self, other: &Introspection) -> bool;
     fn dyn_hash(&self, state: &mut dyn Hasher);
+    fn as_any(&self) -> &dyn Any;
 }
 
 impl<T> Bounds for T
@@ -199,6 +208,10 @@ where
         // equal data should be different.
         TypeId::of::<Self>().hash(&mut state);
         self.hash(&mut state);
+    }
+
+    fn as_any(&self) -> &dyn Any {
+        self
     }
 }
 
