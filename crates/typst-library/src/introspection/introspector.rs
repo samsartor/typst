@@ -11,7 +11,7 @@ use smallvec::SmallVec;
 use typst_syntax::VirtualPath;
 
 use crate::diag::{StrResult, bail};
-use crate::foundations::{Content, Label, Repr, Selector};
+use crate::foundations::{Content, Label, Repr, Selector, Value};
 use crate::introspection::{DocumentPosition, Location, Tag};
 use crate::model::Numbering;
 
@@ -86,6 +86,11 @@ pub trait Introspector: Send + Sync {
     /// Returns `None` in a single document (not a bundle) or if the location is
     /// not associated with a document or asset (top-level in a bundle).
     fn path(&self, location: Location) -> Option<&VirtualPath>;
+
+    /// Returns extended data provided by a custom Introspector implementation.
+    fn value(&self, _key: u128) -> Option<Value> {
+        None
+    }
 }
 
 /// An introspector that returns empty results for all inquiries.
