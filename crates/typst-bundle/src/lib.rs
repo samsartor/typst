@@ -5,9 +5,8 @@ mod export_;
 mod introspect;
 mod link;
 
-use crate::introspect::BundleIntrospector;
-
 pub use self::export_::{BundleOptions, VirtualFs, export};
+pub use crate::introspect::BundleIntrospector;
 
 use std::collections::hash_map::Entry;
 use std::sync::Arc;
