@@ -505,6 +505,14 @@ impl Dynamic {
         Self(Arc::new(any))
     }
 
+    /// Create a new instance from any Arc-wrapped value that satisfies the required bounds.
+    pub fn from_arc<T>(any: Arc<T>) -> Self
+    where
+        T: Debug + Repr + NativeType + PartialEq + Hash + Sync + Send + 'static,
+    {
+        Self(any)
+    }
+
     /// Whether the wrapped type is `T`.
     pub fn is<T: 'static>(&self) -> bool {
         let inner: &dyn Bounds = &*self.0;
