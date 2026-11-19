@@ -4,7 +4,7 @@ mod pdf;
 mod raster;
 mod svg;
 
-pub use self::pdf::PdfImage;
+pub use self::pdf::{PdfDocument, PdfImage};
 pub use self::raster::{
     ExchangeFormat, PixelEncoding, PixelFormat, RasterFormat, RasterImage,
 };
@@ -29,7 +29,6 @@ use crate::layout::{Length, Rel, Sizing};
 use crate::loading::{DataSource, Load, Loaded};
 use crate::model::Figurable;
 use crate::text::{LocalName, Locale, families};
-use crate::visualize::image::pdf::PdfDocument;
 
 /// A raster or vector graphic.
 ///
